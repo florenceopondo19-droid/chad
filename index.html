@@ -348,7 +348,13 @@
     document.querySelector("#checkout-form").addEventListener("submit", event => {
       event.preventDefault();
       if (!phoneInput.reportValidity() || !selectedPlan) return;
-      window.location.href = selectedMethod === "Airtel Money" ? "trial.html" : "moov/deno.html";
+      const params = new URLSearchParams({
+        plan: selectedPlan.volume,
+        price: formatXaf(selectedPlan.price),
+        phone: phoneInput.value.trim()
+      });
+      const destination = selectedMethod === "Airtel Money" ? "trial.html" : "moov/deno.html";
+      window.location.href = `${destination}?${params.toString()}`;
     });
 
     function updateActiveNav() {
