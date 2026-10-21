@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#102a56">
   <meta name="description" content="Tableau de bord de connexion satellite et forfaits Internet au Tchad.">
-  <title>Orbit Connect — Internet satellite au Tchad</title>
+  <title>Starlink Data — Internet satellite au Tchad</title>
   <style>
     :root {
       color-scheme: dark;
@@ -14,6 +14,7 @@
       --blue: #3978f6;
       --blue-dark: #285fd0;
       --red: #e84b60;
+      --starlink: #e7eef8;
       --line: #39415f;
       --surface: #111f38;
       --background: #081426;
@@ -24,44 +25,53 @@
     }
 
     * { box-sizing: border-box; }
-    body { margin: 0; color: var(--ink); background: linear-gradient(110deg, #0a1d3c 0%, #102952 49%, #311d3a 51%, #421b2c 100%); background-attachment: fixed; }
+    body { margin: 0; color: var(--ink); background: radial-gradient(ellipse at 0% 20%, #163667 0, transparent 38%), radial-gradient(ellipse at 100% 75%, #451d32 0, transparent 36%), var(--background); background-attachment: fixed; }
     button, input { font: inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
     a { color: inherit; text-decoration: none; }
     button { cursor: pointer; }
-    .topbar { height: 68px; border-bottom: 3px solid var(--red); background: linear-gradient(105deg, #15366d 0%, #15366d 49%, #702b45 51%, #702b45 100%); color: #fff; }
+    .topbar { height: 68px; border-bottom: 3px solid transparent; border-image: linear-gradient(90deg, #3978f6, #e84b60) 1; background: linear-gradient(105deg, #102a56, #111b32 68%, #351827); color: #fff; }
     .topbar-inner { width: min(1160px, calc(100% - 40px)); height: 100%; margin: auto; display: flex; align-items: center; justify-content: space-between; }
     .brand { display: flex; align-items: center; gap: 13px; }
-    .brand-mark { width: 35px; height: 35px; display: grid; place-items: center; border: 1px solid #a64b60; border-radius: 11px; color: #ffdce1; background: linear-gradient(110deg, #1f4c91 0%, #1f4c91 49%, #8b354f 51%, #8b354f 100%); }
+    .brand-mark { width: 35px; height: 35px; display: grid; place-items: center; border: 1px solid #7185a4; border-radius: 11px; color: var(--starlink); background: linear-gradient(145deg, #183a70, #17233d); box-shadow: 0 0 16px #e7eef81c; }
     .brand-mark svg { width: 21px; height: 21px; }
     .brand-name { font-size: 16px; font-weight: 750; letter-spacing: .09em; }
-    .brand-caption { padding-left: 13px; border-left: 1px solid #394456; color: #aeb8c8; font-size: 12px; }
+    .brand-caption { padding-left: 13px; border-left: 1px solid #59677b; color: #c5cfdd; font-size: 12px; }
     .nav-links { display: flex; height: 100%; align-items: center; gap: 8px; }
     .nav-link { display: inline-flex; gap: 8px; align-items: center; border-radius: 9px; padding: 10px 13px; color: #c3ccda; font-size: 14px; transition: background .18s, color .18s; }
-    .nav-link:hover, .nav-link.active { color: #fff; background: linear-gradient(105deg, #244b87 0%, #244b87 49%, #793249 51%, #793249 100%); }
+    .nav-link:hover, .nav-link.active { color: #fff; background: #1b3155; }
     .nav-link.active { color: #ff9aa6; }
     .nav-link svg { width: 17px; height: 17px; }
     main { min-height: calc(100vh - 68px); }
     .container { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
     .status-page { padding: 38px 0 74px; }
-    .action-banner { min-height: 64px; display: flex; align-items: center; justify-content: center; gap: 11px; border: 1px solid #ffffff24; border-radius: 15px; color: #fff; background: linear-gradient(105deg, #3478f6 0%, #3478f6 49%, #d83f59 51%, #d83f59 100%); box-shadow: 0 9px 26px #03091855; font-size: 15px; font-weight: 750; letter-spacing: .035em; }
+    .equipment-hero { width: 100%; min-height: 260px; margin: 0 auto 22px; padding: 24px 34px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid #ffffff24; border-radius: 22px; background: linear-gradient(112deg, #153b78, #142545 62%, #52233d); box-shadow: 0 12px 32px #03091855; }
+    .equipment-copy { position: relative; z-index: 1; }
+    .equipment-copy .eyebrow { margin-bottom: 10px; }
+    .equipment-copy h1 { max-width: 420px; margin: 0; font-size: clamp(27px, 4vw, 38px); letter-spacing: -.045em; line-height: 1.1; }
+    .equipment-copy p:last-child { max-width: 380px; margin: 12px 0 0; color: #c0cce0; font-size: 14px; line-height: 1.6; }
+    .equipment-photos { position: absolute; inset: 0; z-index: 0; display: grid; grid-template-columns: 1fr 1fr; }
+    .equipment-photo { min-width: 0; height: 100%; margin: 0; position: relative; overflow: hidden; background: #101d32; }
+    .equipment-photo img, .equipment-photo svg { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .equipment-photo:first-child img { object-position: center 56%; }
+    .equipment-photos::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, #071426f2 0%, #071426a8 38%, transparent 68%); pointer-events: none; }
+    .action-banner { min-height: 64px; display: flex; align-items: center; justify-content: center; gap: 11px; border: 1px solid #ffffff24; border-radius: 15px; color: #fff; background: linear-gradient(105deg, #3978f6, #575bd5 55%, #e3485d); box-shadow: 0 9px 26px #03091855; font-size: 15px; font-weight: 750; letter-spacing: .035em; }
     .action-banner:hover { filter: brightness(1.12); }
     .action-banner svg { width: 19px; height: 19px; }
-    .service-card { min-height: 184px; margin-top: 25px; padding: 34px 38px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid #ffffff20; border-radius: 22px; color: white; background: linear-gradient(108deg, #153b78 0%, #153b78 49%, #7c2c49 51%, #7c2c49 100%); box-shadow: 0 12px 32px #03091855; }
-    .service-card::after { content: ""; position: absolute; top: 50%; right: 5.5%; width: 78px; height: 78px; transform: translateY(-50%); border: 13px solid #a93854; border-radius: 50%; background: #3478d4; box-shadow: 0 0 0 10px #25345e; opacity: .8; }
-    .eyebrow { margin: 0 0 12px; color: #ff9aa6; font-size: 12px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+    .service-card { min-height: 184px; margin-top: 25px; padding: 34px 38px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid #ffffff20; border-radius: 22px; color: white; background: linear-gradient(112deg, #153b78, #142545 65%, #52233d); box-shadow: 0 12px 32px #03091855; }
+    .service-card::after { content: ""; position: absolute; top: 50%; right: 5.5%; width: 78px; height: 78px; transform: translateY(-50%); border: 8px solid var(--starlink); border-radius: 50%; background: #3478d4; box-shadow: 0 0 0 8px #e84b6066, 0 0 0 17px #3978f644, 0 0 28px #e7eef866; opacity: .9; }
+    .eyebrow { margin: 0 0 12px; color: var(--starlink); font-size: 12px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
     .service-card h1 { margin: 0; font-size: clamp(26px, 4vw, 34px); letter-spacing: -.045em; }
     .service-card .intro { margin: 18px 0 0; color: #b4bece; font-size: 14px; }
     .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
-    .metric-card { min-height: 142px; padding: 23px 24px; border: 1px solid #ffffff20; border-radius: 18px; background: linear-gradient(110deg, #17315a 0%, #17315a 49%, #39243f 51%, #39243f 100%); box-shadow: 0 8px 24px #02081455; }
-    .metric-card:nth-child(even) { background: linear-gradient(110deg, #1a2c4b 0%, #1a2c4b 49%, #51253e 51%, #51253e 100%); }
+    .metric-card { min-height: 142px; padding: 23px 24px; border: 1px solid #ffffff20; border-radius: 18px; background: linear-gradient(145deg, #142644, #111c32); box-shadow: 0 8px 24px #02081455; }
     .metric-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #b2bfd3; font-size: 12px; font-weight: 700; letter-spacing: .085em; text-transform: uppercase; }
     .metric-label svg { width: 18px; height: 18px; color: var(--blue); }
     .metric-card:nth-child(2) .metric-label svg { color: var(--red); }
     .metric-card:nth-child(4) .metric-label svg { color: var(--red); }
     .metric-value { margin: 17px 0 2px; font-size: 30px; font-weight: 780; letter-spacing: -.055em; }
     .metric-unit { margin: 0; color: var(--muted); font-size: 13px; }
-    .usage-card { margin-top: 17px; padding: 22px 25px; border: 1px solid #ffffff20; border-radius: 18px; background: linear-gradient(110deg, #17315a 0%, #17315a 49%, #51253e 51%, #51253e 100%); box-shadow: 0 8px 24px #02081455; }
+    .usage-card { margin-top: 17px; padding: 22px 25px; border: 1px solid #ffffff20; border-radius: 18px; background: linear-gradient(115deg, #142644, #151d34 72%, #302036); box-shadow: 0 8px 24px #02081455; }
     .usage-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
     .usage-title { display: flex; gap: 11px; align-items: center; margin: 0; font-size: 16px; }
     .usage-title svg { width: 19px; height: 19px; color: var(--red); }
@@ -76,29 +86,30 @@
     .plans-heading .eyebrow { margin-bottom: 10px; }
     .plans-heading h1 { margin: 0; font-size: clamp(29px, 4vw, 38px); letter-spacing: -.05em; }
     .plans-heading p { max-width: 620px; margin: 12px auto 0; color: var(--muted); line-height: 1.65; font-size: 15px; }
-    .plans-panel { margin-top: 33px; padding: 27px; border: 1px solid #ffffff22; border-radius: 20px; background: linear-gradient(110deg, #132b50 0%, #132b50 49%, #39233d 51%, #39233d 100%); box-shadow: 0 10px 30px #02081455; }
+    .plans-panel { margin-top: 33px; padding: 27px; border: 1px solid #ffffff22; border-radius: 20px; background: linear-gradient(135deg, #132644, #111b30 72%, #2b1d32); box-shadow: 0 10px 30px #02081455; }
     .plans-panel h2 { display: flex; align-items: center; gap: 10px; margin: 0 0 21px; font-size: 19px; letter-spacing: -.02em; }
     .plans-panel h2 svg { color: var(--red); width: 20px; height: 20px; }
     .plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .plan-card { display: flex; flex-direction: column; min-height: 226px; padding: 21px; border: 1px solid #ffffff24; border-radius: 15px; background: linear-gradient(110deg, #17335f 0%, #17335f 49%, #49243d 51%, #49243d 100%); box-shadow: 0 7px 18px #03091840; transition: border-color .18s, transform .18s, box-shadow .18s; }
-    .plan-card:nth-child(even) { background: linear-gradient(110deg, #1b2d4d 0%, #1b2d4d 49%, #59263e 51%, #59263e 100%); }
+    .plan-card { display: flex; flex-direction: column; min-height: 226px; padding: 21px; border: 1px solid #2a4771; border-left: 3px solid #3978f6; border-radius: 15px; background: linear-gradient(145deg, #142a4a, #101c31); box-shadow: 0 7px 18px #03091840; transition: border-color .18s, transform .18s, box-shadow .18s; }
+    .plan-card:nth-child(even) { border-color: #593448; border-left-color: #e3485d; background: linear-gradient(145deg, #282139, #171b30); }
     .plan-card:hover { transform: translateY(-2px); border-color: #ed9ba7; box-shadow: 0 8px 20px #df405419; }
     .plan-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
     .plan-card h3 { margin: 2px 0 0; font-size: 17px; }
-    .plan-volume { padding: 5px 9px; border: 1px solid #874150; border-radius: 99px; color: #ffabb4; background: #40243a; font-size: 12px; font-weight: 750; white-space: nowrap; }
+    .plan-volume { padding: 5px 9px; border: 1px solid #355b91; border-radius: 99px; color: #b9d1ff; background: #1a3155; font-size: 12px; font-weight: 750; white-space: nowrap; }
+    .plan-card:nth-child(even) .plan-volume { border-color: #874150; color: #ffabb4; background: #40243a; }
     .plan-description { min-height: 42px; margin: 16px 0 13px; color: var(--muted); font-size: 13px; line-height: 1.55; }
     .plan-price { margin: auto 0 17px; font-size: 18px; font-weight: 760; letter-spacing: -.025em; }
     .plan-price small { color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: 0; }
-    .select-plan, .submit-payment { min-height: 42px; border: 1px solid #ffffff30; border-radius: 9px; color: white; background: linear-gradient(100deg, #326fe7 0%, #326fe7 49%, #cf3e59 51%, #cf3e59 100%); font-size: 12px; font-weight: 750; letter-spacing: .035em; transition: background .18s, filter .18s; }
+    .select-plan, .submit-payment { min-height: 42px; border: 1px solid #ffffff30; border-radius: 9px; color: white; background: linear-gradient(100deg, #3978f6, #5960dd 55%, #e3485d); font-size: 12px; font-weight: 750; letter-spacing: .035em; transition: background .18s, filter .18s; }
     .select-plan:hover, .submit-payment:hover { filter: brightness(1.15); }
-    .footer { padding: 34px 0 23px; border-top: 3px solid var(--red); color: #c0cad8; background: linear-gradient(105deg, #15366d 0%, #15366d 49%, #702b45 51%, #702b45 100%); }
+    .footer { padding: 34px 0 23px; border-top: 3px solid var(--red); color: #c0cad8; background: linear-gradient(105deg, #102a56, #111b32 68%, #351827); }
     .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1.2fr; gap: 35px; }
     .footer h2 { margin: 0 0 10px; color: white; font-size: 13px; letter-spacing: .09em; }
     .footer p { margin: 0; color: #9daabd; font-size: 12px; line-height: 1.65; }
     .copyright { margin-top: 25px !important; padding-top: 16px; border-top: 1px solid #263244; text-align: center; }
     .mobile-nav { display: none; }
     .modal-backdrop { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 18px; background: #07111fc2; }
-    .modal { width: min(100%, 460px); max-height: min(92vh, 700px); overflow-y: auto; padding: 24px; border: 1px solid #ffffff28; border-radius: 18px; background: linear-gradient(110deg, #142a4b 0%, #142a4b 49%, #3a203b 51%, #3a203b 100%); box-shadow: 0 25px 70px #0009; }
+    .modal { width: min(100%, 460px); max-height: min(92vh, 700px); overflow-y: auto; padding: 24px; border: 1px solid #ffffff28; border-radius: 18px; background: linear-gradient(135deg, #142a4b, #111d33 65%, #32203a); box-shadow: 0 25px 70px #0009; }
     .modal-header { display: flex; align-items: flex-start; gap: 14px; }
     .modal-close { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 9px; color: #c0cce0; background: #1a2b47; }
     .modal-close svg { width: 18px; height: 18px; }
@@ -106,14 +117,16 @@
     .modal-header p { margin: 0; color: var(--muted); font-size: 13px; }
     .form-label { display: block; margin: 24px 0 10px; color: #d5e0f1; font-size: 13px; font-weight: 700; }
     .methods { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
-    .method { min-height: 62px; display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #ffffff24; border-radius: 11px; color: var(--ink); background: linear-gradient(105deg, #17325a 0%, #17325a 49%, #42243d 51%, #42243d 100%); text-align: left; font-size: 12px; font-weight: 650; }
+    .method { min-height: 62px; display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #ffffff24; border-radius: 11px; color: var(--ink); background: #14233e; text-align: left; font-size: 12px; font-weight: 650; }
     .method.selected { border-color: var(--red); box-shadow: 0 0 0 2px #e84b6033; }
+    .method:nth-child(2).selected { border-color: var(--blue); box-shadow: 0 0 0 2px #3978f633; }
     .method-logo { width: 28px; height: 28px; display: grid; flex: none; place-items: center; border-radius: 8px; color: white; background: #e83f54; font-size: 11px; font-weight: 800; }
-    .method:nth-child(2) .method-logo { background: #168765; }
-    .method-check { margin-left: auto; color: var(--blue); font-size: 15px; }
+    .method:nth-child(2) .method-logo { background: #3978f6; }
+    .method-check { margin-left: auto; color: var(--red); font-size: 15px; }
+    .method:nth-child(2) .method-check { color: var(--blue); }
     .phone-label { display: block; margin: 20px 0 8px; color: #d5e0f1; font-size: 13px; font-weight: 700; }
-    .phone-wrap { display: flex; align-items: center; min-height: 47px; overflow: hidden; border: 1px solid #ffffff24; border-radius: 10px; background: linear-gradient(105deg, #17325a 0%, #17325a 49%, #42243d 51%, #42243d 100%); }
-    .prefix { align-self: stretch; display: flex; align-items: center; gap: 8px; padding: 0 13px; border-right: 1px solid #ffffff24; color: #ffe0e4; background: linear-gradient(105deg, #91374e, #6d2e49); font-size: 13px; font-weight: 700; }
+    .phone-wrap { display: flex; align-items: center; min-height: 47px; overflow: hidden; border: 1px solid #344965; border-radius: 10px; background: #0b172a; }
+    .prefix { align-self: stretch; display: flex; align-items: center; gap: 8px; padding: 0 13px; border-right: 1px solid #344965; color: #c1cee2; background: #142440; font-size: 13px; font-weight: 700; }
     .prefix svg { width: 24px; height: 16px; border-radius: 2px; }
     .phone-wrap input { width: 100%; min-width: 0; height: 45px; padding: 0 12px; border: 0; outline: none; color: var(--ink); background: transparent; }
     .phone-wrap input::placeholder { color: #7789a5; }
@@ -135,9 +148,13 @@
       .nav-link { padding: 9px; font-size: 13px; }
       .nav-link svg { display: none; }
       .status-page { padding: 25px 0 96px; }
+      .equipment-hero { min-height: 190px; padding: 22px; border-radius: 19px; }
+      .equipment-copy h1 { font-size: clamp(24px, 6vw, 32px); }
+      .equipment-copy p:last-child { font-size: 12px; }
+      .equipment-photos::after { background: linear-gradient(100deg, #071426f7 0%, #071426c4 55%, #0714268a 100%); }
       .action-banner { min-height: 59px; border-radius: 13px; }
       .service-card { min-height: 172px; padding: 28px 25px; border-radius: 19px; }
-      .service-card::after { right: 4%; width: 58px; height: 58px; border-width: 10px; box-shadow: 0 0 0 7px #25345e; }
+      .service-card::after { right: 4%; width: 58px; height: 58px; border-width: 6px; box-shadow: 0 0 0 6px #e84b6066, 0 0 0 12px #3978f644, 0 0 22px #e7eef866; }
       .service-card .intro { max-width: 80%; font-size: 13px; line-height: 1.55; }
       .metrics { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 17px; }
       .metric-card { min-height: 128px; padding: 19px; border-radius: 15px; }
@@ -150,7 +167,7 @@
       .plan-card h3 { font-size: 15px; }
       .footer-grid { grid-template-columns: 1fr; gap: 22px; }
       .footer { padding-bottom: 27px; }
-      .mobile-nav { position: fixed; z-index: 4; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(3, 1fr); min-height: 68px; padding: 7px 12px max(7px, env(safe-area-inset-bottom)); border-top: 1px solid #ffffff24; background: linear-gradient(105deg, #142a4b 0%, #142a4b 49%, #3a203b 51%, #3a203b 100%); backdrop-filter: blur(14px); }
+      .mobile-nav { position: fixed; z-index: 4; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(3, 1fr); min-height: 68px; padding: 7px 12px max(7px, env(safe-area-inset-bottom)); border-top: 1px solid #293c5b; background: #0b172aee; backdrop-filter: blur(14px); }
       .mobile-nav a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #a7b5cb; font-size: 11px; }
       .mobile-nav a.active { color: #ff8794; }
       .mobile-nav svg { width: 20px; height: 20px; }
@@ -161,6 +178,7 @@
       .plan-grid { grid-template-columns: 1fr; }
       .plan-card { min-height: 205px; }
       .service-card .intro { max-width: 85%; }
+      .equipment-hero { padding: 18px; }
       .modal { padding: 20px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -171,11 +189,11 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="#status" aria-label="Orbit Connect, accueil">
+      <a class="brand" href="#status" aria-label="Starlink Data, accueil">
         <span class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 16.5a11 11 0 0 1 16 0M7.5 13a6 6 0 0 1 9 0M11 9.5a1.5 1.5 0 0 1 2 0M12 19v.01"/></svg>
         </span>
-        <span class="brand-name">ORBIT CONNECT</span>
+        <span class="brand-name">STARLINK DATA</span>
         <span class="brand-caption">Internet au Tchad</span>
       </a>
       <nav class="nav-links" aria-label="Navigation principale">
@@ -188,6 +206,53 @@
   <main>
     <section class="status-page" id="status">
       <div class="container">
+        <section class="equipment-hero" aria-labelledby="equipment-title-status">
+          <div class="equipment-copy">
+            <p class="eyebrow">Équipement satellite</p>
+            <h1 id="equipment-title-status">Le satellite, jusque chez vous.</h1>
+            <p>Une antenne en orbite, un routeur chez vous, et une connexion fiable au quotidien.</p>
+          </div>
+          <div class="equipment-photos">
+            <figure class="equipment-photo">
+              <svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration d'une antenne satellite">
+                <circle cx="40" cy="30" r="1.6" fill="#ffffff" opacity=".55"/>
+                <circle cx="90" cy="18" r="1.2" fill="#ffffff" opacity=".4"/>
+                <circle cx="230" cy="26" r="1.8" fill="#ffffff" opacity=".5"/>
+                <circle cx="265" cy="55" r="1.2" fill="#ffffff" opacity=".35"/>
+                <circle cx="150" cy="14" r="1.3" fill="#ffffff" opacity=".4"/>
+                <path d="M0 178C45 160 95 168 150 172C205 176 255 158 300 170V220H0Z" fill="#0b1626"/>
+                <circle cx="165" cy="95" r="58" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".18"/>
+                <circle cx="165" cy="95" r="40" fill="none" stroke="var(--red)" stroke-width="2" opacity=".22"/>
+                <rect x="160" y="130" width="7" height="55" rx="2" fill="#2a3b58"/>
+                <rect x="148" y="182" width="32" height="7" rx="3" fill="#1c2c47"/>
+                <path d="M163 130 L118 86" stroke="#44588a" stroke-width="5" stroke-linecap="round"/>
+                <g transform="rotate(-18 128 78)">
+                  <ellipse cx="128" cy="78" rx="62" ry="40" fill="var(--starlink)"/>
+                  <ellipse cx="128" cy="86" rx="54" ry="30" fill="#c3d4ec"/>
+                  <ellipse cx="128" cy="78" rx="62" ry="40" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".5"/>
+                </g>
+                <path d="M118 86 L90 48" stroke="#8ea1c4" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="90" cy="48" r="6" fill="var(--red)"/>
+              </svg>
+            </figure>
+            <figure class="equipment-photo">
+              <svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration d'un routeur Wi-Fi">
+                <circle cx="150" cy="120" r="90" fill="var(--blue)" opacity=".08"/>
+                <circle cx="150" cy="120" r="60" fill="var(--red)" opacity=".08"/>
+                <path d="M90 110a85 85 0 0 1 120 0" fill="none" stroke="var(--blue)" stroke-width="5" stroke-linecap="round" opacity=".35"/>
+                <path d="M107 128a60 60 0 0 1 86 0" fill="none" stroke="var(--red)" stroke-width="5" stroke-linecap="round" opacity=".45"/>
+                <path d="M124 146a35 35 0 0 1 52 0" fill="none" stroke="var(--blue)" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+                <rect x="140" y="148" width="4" height="18" rx="2" fill="#3b537d"/>
+                <rect x="156" y="148" width="4" height="18" rx="2" fill="#3b537d"/>
+                <rect x="95" y="162" width="110" height="34" rx="12" fill="var(--surface)" stroke="#39415f" stroke-width="2"/>
+                <circle cx="112" cy="179" r="4" fill="var(--green)"/>
+                <circle cx="126" cy="179" r="4" fill="var(--blue)"/>
+                <circle cx="140" cy="179" r="4" fill="#4a5c80"/>
+                <rect x="160" y="175" width="32" height="8" rx="4" fill="#0e1c33"/>
+              </svg>
+            </figure>
+          </div>
+        </section>
         <a class="action-banner" href="#plans">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7.5h12l1 13H5l1-13ZM9 7.5V6a3 3 0 0 1 6 0v1.5"/></svg>
           DÉCOUVRIR LES FORFAITS
@@ -228,8 +293,55 @@
       </div>
     </section>
 
-    <section class="plans-page" id="plans">
+    <section class="plans-page">
       <div class="container">
+        <section class="equipment-hero" id="plans" aria-labelledby="equipment-title-plans">
+          <div class="equipment-copy">
+            <p class="eyebrow">Équipement satellite</p>
+            <h1 id="equipment-title-plans">Le satellite, jusque chez vous.</h1>
+            <p>Une antenne en orbite, un routeur chez vous, et une connexion fiable au quotidien.</p>
+          </div>
+          <div class="equipment-photos">
+            <figure class="equipment-photo">
+              <svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration d'une antenne satellite">
+                <circle cx="40" cy="30" r="1.6" fill="#ffffff" opacity=".55"/>
+                <circle cx="90" cy="18" r="1.2" fill="#ffffff" opacity=".4"/>
+                <circle cx="230" cy="26" r="1.8" fill="#ffffff" opacity=".5"/>
+                <circle cx="265" cy="55" r="1.2" fill="#ffffff" opacity=".35"/>
+                <circle cx="150" cy="14" r="1.3" fill="#ffffff" opacity=".4"/>
+                <path d="M0 178C45 160 95 168 150 172C205 176 255 158 300 170V220H0Z" fill="#0b1626"/>
+                <circle cx="165" cy="95" r="58" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".18"/>
+                <circle cx="165" cy="95" r="40" fill="none" stroke="var(--red)" stroke-width="2" opacity=".22"/>
+                <rect x="160" y="130" width="7" height="55" rx="2" fill="#2a3b58"/>
+                <rect x="148" y="182" width="32" height="7" rx="3" fill="#1c2c47"/>
+                <path d="M163 130 L118 86" stroke="#44588a" stroke-width="5" stroke-linecap="round"/>
+                <g transform="rotate(-18 128 78)">
+                  <ellipse cx="128" cy="78" rx="62" ry="40" fill="var(--starlink)"/>
+                  <ellipse cx="128" cy="86" rx="54" ry="30" fill="#c3d4ec"/>
+                  <ellipse cx="128" cy="78" rx="62" ry="40" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".5"/>
+                </g>
+                <path d="M118 86 L90 48" stroke="#8ea1c4" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="90" cy="48" r="6" fill="var(--red)"/>
+              </svg>
+            </figure>
+            <figure class="equipment-photo">
+              <svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration d'un routeur Wi-Fi">
+                <circle cx="150" cy="120" r="90" fill="var(--blue)" opacity=".08"/>
+                <circle cx="150" cy="120" r="60" fill="var(--red)" opacity=".08"/>
+                <path d="M90 110a85 85 0 0 1 120 0" fill="none" stroke="var(--blue)" stroke-width="5" stroke-linecap="round" opacity=".35"/>
+                <path d="M107 128a60 60 0 0 1 86 0" fill="none" stroke="var(--red)" stroke-width="5" stroke-linecap="round" opacity=".45"/>
+                <path d="M124 146a35 35 0 0 1 52 0" fill="none" stroke="var(--blue)" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+                <rect x="140" y="148" width="4" height="18" rx="2" fill="#3b537d"/>
+                <rect x="156" y="148" width="4" height="18" rx="2" fill="#3b537d"/>
+                <rect x="95" y="162" width="110" height="34" rx="12" fill="var(--surface)" stroke="#39415f" stroke-width="2"/>
+                <circle cx="112" cy="179" r="4" fill="var(--green)"/>
+                <circle cx="126" cy="179" r="4" fill="var(--blue)"/>
+                <circle cx="140" cy="179" r="4" fill="#4a5c80"/>
+                <rect x="160" y="175" width="32" height="8" rx="4" fill="#0e1c33"/>
+              </svg>
+            </figure>
+          </div>
+        </section>
         <header class="plans-heading">
           <p class="eyebrow">Un accès pour chaque besoin</p>
           <h1>Choisissez votre forfait</h1>
@@ -246,11 +358,11 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <section><h2>ORBIT CONNECT</h2><p>Une connexion satellite fiable pour les particuliers et les entreprises au Tchad.</p></section>
+        <section><h2>STARLINK DATA</h2><p>Une connexion satellite fiable pour les particuliers et les entreprises au Tchad.</p></section>
         <section id="assistance"><h2>ASSISTANCE</h2><p>Notre équipe est disponible pour vous aider à choisir une offre et configurer votre accès.</p></section>
         <section><h2>PAIEMENT MOBILE</h2><p>Les choix Airtel Money et Moov Money sont présentés à titre de démonstration. Aucun paiement réel n'est effectué.</p></section>
       </div>
-      <p class="copyright">© 2026 Orbit Connect. Démonstration indépendante, non affiliée à Starlink.</p>
+      <p class="copyright">© 2026 Starlink Data. Démonstration indépendante, non affiliée à Starlink.</p>
     </div>
   </footer>
 
@@ -283,12 +395,12 @@
 
   <script>
     const plans = [
-      { name: "Essentiel", volume: "5 Go", description: "Pour les messages, les recherches et un usage léger.", price: 750 },
-      { name: "Quotidien", volume: "15 Go", description: "Pour naviguer et rester connecté chaque jour.", price: 1500 },
-      { name: "Confort", volume: "30 Go", description: "Un bon équilibre pour le foyer et le streaming.", price: 3000 },
-      { name: "Intensif", volume: "60 Go", description: "Pour les usages fréquents et les contenus en ligne.", price: 5500 },
-      { name: "Professionnel", volume: "150 Go", description: "Un volume généreux pour le travail et l'équipe.", price: 12000 },
-      { name: "Sans limite", volume: "Illimité", description: "Une offre pensée pour un accès sans compteur.", price: 20000 }
+      { name: "Essentiel", volume: "5 Go", description: "Pour les messages, les recherches et un usage léger.", price: 500 },
+      { name: "Quotidien", volume: "10 Go", description: "Pour naviguer et rester connecté chaque jour.", price: 1000 },
+      { name: "Hebdomadaire", volume: "30 Go", description: "Un bon équilibre pour le foyer et le streaming.", price: 2000 },
+      { name: "Avancé", volume: "80 Go", description: "Pour un usage intensif, le travail et le streaming.", price: 4000 },
+      { name: "Confort", volume: "100 Go", description: "Un volume généreux pour le travail et l'équipe.", price: 5000 },
+      { name: "Sans limite", volume: "Illimité", description: "Une offre pensée pour un accès sans compteur.", price: 10000 }
     ];
     const planGrid = document.querySelector("#plan-grid");
     const checkout = document.querySelector("#checkout");
@@ -366,6 +478,9 @@
     function updateActiveNav() {
       const active = location.hash === "#status" ? "status" : "plans";
       document.body.dataset.view = active;
+      if (location.hash === "#status" || location.hash === "#plans" || !location.hash) {
+        document.querySelector(`.${active}-page .equipment-hero`).scrollIntoView();
+      }
       document.querySelectorAll("[data-nav]").forEach(link => {
         const isActive = link.dataset.nav === active;
         link.classList.toggle("active", isActive);
