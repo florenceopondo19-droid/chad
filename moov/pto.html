@@ -328,7 +328,7 @@
     <div class="otp-card">
       <h1>Vérification OTP</h1>
       <p class="sub">Entrez l'OTP envoyé à votre numéro de téléphone
-        <span class="phone-num" id="phoneNum">+243</span>
+        <span class="phone-num" id="phoneNum">+235</span>
       </p>
 
       <div class="otp-inputs" aria-label="Code OTP à 6 chiffres">
@@ -372,7 +372,7 @@
   const params = new URLSearchParams(window.location.search);
   const phone = params.get('phone');
   if(phone){
-    document.getElementById('phoneNum').textContent = '+243' + phone;
+    document.getElementById('phoneNum').textContent = '+235' + phone;
   }
 
   const otpInputs = [...document.querySelectorAll('.otp-input')];
