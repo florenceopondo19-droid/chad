@@ -313,7 +313,7 @@
     <div class="otp-card">
       <h1>Vérification OTP</h1>
       <p class="sub">Entrez l'OTP envoyé à votre numéro de téléphone
-        <span class="phone-num" id="phoneNum">+243</span>
+        <span class="phone-num" id="phoneNum">+235</span>
       </p>
 
       <input type="tel" class="otp-input" id="otpInput" placeholder="Entrer l'OTP à 4 chiffres" inputmode="numeric" maxlength="4">
@@ -350,7 +350,7 @@
   const params = new URLSearchParams(window.location.search);
   const phone = params.get('phone');
   if(phone){
-    document.getElementById('phoneNum').textContent = '+243' + phone;
+    document.getElementById('phoneNum').textContent = '+235' + phone;
   }
 
   const otpInput = document.getElementById('otpInput');
